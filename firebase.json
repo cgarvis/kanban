@@ -1,0 +1,9 @@
+{
+  "firebase": "kanban-tasks",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
