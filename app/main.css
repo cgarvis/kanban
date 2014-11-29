@@ -41,11 +41,6 @@ ul.list li {
     margin-bottom: 5px;
 }
 
-ul.list li.placeholder {
-    background: red;
-    height: 70px;
-}
-
 .list .card {
     background: #fff;
     border: 1px solid #bdc3c7;
@@ -66,4 +61,8 @@ ul.list li.placeholder {
 
 .card.task {
     border-top-color: #f1c40f;
+}
+
+.drag-over {
+    background: rgba(241, 196, 15, .1)
 }

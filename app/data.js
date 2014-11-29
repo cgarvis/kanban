@@ -15,6 +15,16 @@ class Data {
     ServerActionCreators.receiveData(this.data);
   }
 
+  update(task) {
+    console.log('Updating task', task);
+    this.ref
+        .child('projects')
+        .child(task.projectId)
+        .child('tasks')
+        .child(task.id)
+        .set({task: task.task, state: task.state, type: task.type});
+  }
+
   createTask(projectId, task) {
     this.ref
       .child('projects')

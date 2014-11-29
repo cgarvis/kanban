@@ -49,9 +49,7 @@ var Board = React.createClass({
           </div>
         </div>
 
-        <div className="row">
-          <Lists lists={this.state.lists} tasks={this.state.tasks} />
-        </div>
+        <Lists lists={this.state.lists} tasks={this.state.tasks} />
       </section>
     )
   },

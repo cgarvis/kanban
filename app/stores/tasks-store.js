@@ -13,6 +13,7 @@ function loadRawData(rawData) {
     _projectIndex[projectId] = [];
     _.each(project.tasks, function(task, taskId) {
       _tasks[taskId] = task;
+      _tasks[taskId].id = taskId;
       _tasks[taskId].projectId = projectId;
       _projectIndex[projectId].push(taskId);
     });

@@ -3,6 +3,7 @@ var React = require('react');
 
 var Task = React.createClass({
   propTypes: {
+    isArchivable: React.PropTypes.bool,
     task: React.PropTypes.object.isRequired
   },
   render: function() {

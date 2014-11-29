@@ -3,26 +3,32 @@ var React = require('react');
 
 var Task = require('./task');
 
-var placeholder = document.createElement("li");
-placeholder.className = "placeholder";
-
 var List = React.createClass({
   propTypes: {
     list: React.PropTypes.string.isRequired,
+    onDrag: React.PropTypes.func.isRequired,
     tasks: React.PropTypes.array.isRequired
   },
 
+  dragStart: function(task) {
+    var onDrag = this.props.onDrag;
+
+    return function() {
+      onDrag(task);
+    };
+  },
+
   render: function() {
-    var tasks = this.props.tasks.map(function(task) {
+    var tasks = this.props.tasks.map(function(task, i) {
       return (
-        <li key={task.id}>
-          <Task task={task} key={task.id} />
+        <li key={task.id} draggable="true" onDragStart={this.dragStart(task)}>
+          <Task task={task} />
         </li>
       )
     }, this);
 
     return (
-      <ul className="list">{tasks}</ul>
+      <ul className="list" onDragOver={this.dragOver} onDragEnd={this.moveTask}>{tasks}</ul>
     )
   },
 });
