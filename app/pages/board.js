@@ -1,4 +1,5 @@
 var React = require('react');
+var Button = require('material.react').Button;
 
 var BoardActionCreators = require('../actions/board-action-creators');
 var BoardStore = require('../stores/board-store');
@@ -44,7 +45,7 @@ var Board = React.createClass({
                 <input className="form-control" type="text" placeholder="New task" ref="task" />
               </div>
 
-              <button type="submit" className="btn btn-default">Create</button>
+              <Button type="submit">Create</Button>
             </form>
           </div>
         </div>

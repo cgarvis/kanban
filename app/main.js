@@ -1,3 +1,6 @@
+require('material/dist/material.css');
+require('./main.css');
+
 var React = require('react');
 
 // React configurations

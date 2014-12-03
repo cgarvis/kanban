@@ -1,0 +1,19 @@
+{
+  "name": "kanban",
+  "version": "0.0.0",
+  "authors": [
+    "Christopher Garvis <cgarvis@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "material": "0.0.1"
+  }
+}
