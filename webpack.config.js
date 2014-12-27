@@ -1,9 +1,11 @@
 module.exports = {
   cache: true,
   entry: './app/main',
+  devtool: '#sourcemap',
   output: {
     path: 'app',
-    filename: './app.js'
+    filename: './app.js',
+    sourceMapFilename: './app.js.map'
   },
   module: {
     loaders: [

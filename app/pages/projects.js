@@ -1,8 +1,44 @@
 var React = require('react');
 
+var Layout = require('../components/layout');
+var List = require('material.react').List;
+var Tile = require('material.react').Tile;
+
 var Link = require('react-router').Link;
 
 var ProjectsStore = require('../stores/projects-store');
+
+var ProjectList = React.createClass({
+  propTypes: {
+    projects: React.PropTypes.array
+  },
+
+  getDefaultProps: function() {
+    return {
+      projects: []
+    };
+  },
+
+  render: function() {
+    var projects = this.props.projects.map(function(project) {
+      return <Tile key={project.id}>{project.name}</Tile>
+    });
+
+    var lists = []
+
+    lists.push(<List><Tile>EventCollab</Tile><Tile>Peach</Tile></List>)
+
+    lists.push(<List>{projects}</List>)
+
+    return (
+      <List>
+        {this.props.projects.map(function(project) {
+          return <Tile key={project.id}>{project.name}</Tile>
+        })}
+      </List>
+    )
+  }
+});
 
 var Projects = React.createClass({
   getInitialState: function() {
@@ -12,9 +48,10 @@ var Projects = React.createClass({
   },
 
   getStateFromStore: function() {
-    this.setState({
+    var changes = {
       projects: ProjectsStore.getAll()
-    });
+    };
+    this.replaceState(changes);
   },
 
   componentDidMount: function() {
@@ -27,20 +64,12 @@ var Projects = React.createClass({
   },
 
   render: function() {
-    var projectList = this.state.projects.map(function(project) {
-      return (<li className="well"><Link to="board" params={{projectId: project.id}}>{project.name}</Link></li>)
-    });
-
     return (
-      <div className="row">
-        <h1 className="col-xs-12">Projects</h1>
-
-        <div className="col-xs-12">
-          <ul id="project-list" className="list-unstyled">
-            { projectList }
-          </ul>
+      <Layout title="Projects">
+        <div className="row">
+          <ProjectList projects={this.state.projects} />
         </div>
-      </div>
+      </Layout>
     )
   },
 

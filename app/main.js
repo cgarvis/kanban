@@ -2,6 +2,9 @@ require('material/dist/material.css');
 require('./main.css');
 
 var React = require('react');
+var ReactStyle = require('react-style');
+
+ReactStyle.inject();
 
 // React configurations
 React.initializeTouchEvents(true);

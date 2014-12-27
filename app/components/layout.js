@@ -2,12 +2,17 @@ var React = require('react');
 var AppBar = require('material.react').AppBar;
 
 var Layout = React.createClass({
+  getDefaultProps: function() {
+    return {
+      title: 'Kanban'
+    };
+  },
   render: function() {
     return (
       <div>
-        <AppBar title="Kanban" showNavToggle={true}></AppBar>
+        <AppBar title={this.props.title} showNavToggle={true}></AppBar>
         <div className="container-fluid">
-          <this.props.activeRouteHandler />
+          {this.props.children}
         </div>
       </div>
     )
