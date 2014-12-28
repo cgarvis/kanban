@@ -22,15 +22,34 @@ class Data {
         .child(task.projectId)
         .child('tasks')
         .child(task.id)
-        .set({task: task.task, state: task.state, type: task.type});
+        .set({
+          task: task.task,
+          state: task.state,
+          type: task.type,
+          description: task.description
+        });
   }
 
-  createTask(projectId, task) {
+  createTask(projectId, title) {
     this.ref
       .child('projects')
       .child(projectId)
       .child('tasks')
-      .push({task: task, state: 'ideas', type: 'task'})
+      .push({
+        task: title,
+        state:
+        'ideas',
+        type: 'task'
+      });
+  }
+
+  removeTask(projectId, task) {
+    this.ref
+      .child('projects')
+      .child(projectId)
+      .child('tasks')
+      .child(task.id)
+      .remove();
   }
 }
 

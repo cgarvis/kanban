@@ -6,8 +6,8 @@ var createStore = require('../utils/create-store');
 var TasksStore = require('./tasks-store');
 
 var _lists = [ 'ideas', 'backlog', 'doing', 'done' ];
-var _tasks = [];
 var _projectId;
+var _selectedTaskId;
 
 var BoardStore = createStore({
   initialize: function(projectId) {
@@ -21,6 +21,14 @@ var BoardStore = createStore({
 
   getAllForCurrentProject: function() {
     return TasksStore.getAllByProjectId(_projectId);
+  },
+
+  getSelectedTask: function() {
+    if(_selectedTaskId) {
+      return TasksStore.getById(_selectedTaskId);
+    }
+
+    return null;
   }
 });
 
@@ -33,6 +41,10 @@ BoardStore.dispatchToken = Dispatcher.register(function(payload) {
       break;
     case ActionTypes.RECEIVE_RAW_DATA:
       Dispatcher.waitFor([TasksStore.dispatchToken]);
+      BoardStore.emitChange();
+      break;
+    case ActionTypes.SELECT_TASK:
+      _selectedTaskId = action.taskId;
       BoardStore.emitChange();
       break;
     default:

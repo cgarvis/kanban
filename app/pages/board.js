@@ -1,36 +1,35 @@
 var React = require('react');
+var Navigation = require('react-router').Navigation;
 
 var BoardActionCreators = require('../actions/board-action-creators');
 var BoardStore = require('../stores/board-store');
 
 var Lists = require('../components/lists');
+var ListenToStore = require('../utils/listen-to-store');
 
 var Board = React.createClass({
+  mixins: [ListenToStore, Navigation],
+
   getInitialState: function() {
     return {
       lists: [],
-      tasks: []
+      tasks: [],
+      selectedTask: null,
     };
   },
+
+  stores: [BoardStore],
 
   getStateFromStore: function() {
     this.setState({
       lists: BoardStore.getAllLists(),
-      tasks: BoardStore.getAllForCurrentProject()
+      tasks: BoardStore.getAllForCurrentProject(),
+      selectedTask: BoardStore.getSelectedTask()
     });
   },
 
   componentWillMount: function() {
     BoardActionCreators.selectProject(this.props.params.projectId);
-  },
-
-  componentDidMount: function() {
-    BoardStore.addChangeListener(this._onChange);
-    this.getStateFromStore();
-  },
-
-  componentWillUnmount: function() {
-    BoardStore.removeChangeListener(this._onChange);
   },
 
   render: function() {
@@ -49,7 +48,7 @@ var Board = React.createClass({
           </div>
         </div>
 
-        <Lists lists={this.state.lists} tasks={this.state.tasks} />
+        <Lists lists={this.state.lists} tasks={this.state.tasks} onTaskClick={this._selectTask}/>
       </section>
     )
   },
@@ -63,12 +62,9 @@ var Board = React.createClass({
     BoardActionCreators.createTask(this.props.params.projectId, task);
   },
 
-  /**
-   * Event handler for 'change' events coming from the stores
-   */
-  _onChange: function() {
-    this.getStateFromStore();
-  }
+  _selectTask: function(task) {
+    this.transitionTo('task-details', {projectId: this.props.params.projectId, taskId: task.id});
+  },
 });
 
 module.exports = Board;

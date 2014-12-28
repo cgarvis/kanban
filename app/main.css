@@ -66,3 +66,7 @@ ul.list li {
 .drag-over {
     background: rgba(241, 196, 15, .1)
 }
+
+.task-details header h1 {
+    margin-top: 0;
+}

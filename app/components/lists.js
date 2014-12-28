@@ -2,12 +2,14 @@
 var React = require('react');
 
 var BoardActionCreators = require('../actions/board-action-creators');
+
 var List = require('./list');
 
 var Lists = React.createClass({
   propTypes: {
     lists: React.PropTypes.array.isRequired,
-    tasks: React.PropTypes.array.isRequired
+    tasks: React.PropTypes.array.isRequired,
+    onTaskClick: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -50,17 +52,19 @@ var Lists = React.createClass({
       return (
         <div className={className} key={list} onDragOver={this.onDragOver(list)} onDragEnd={this.move}>
           <h2 className="text-center">{list}</h2>
-          <List list={list} tasks={tasks} onDrag={this.onDrag} />
+          <List list={list} tasks={tasks} onDrag={this.onDrag} onTaskClick={this.props.onTaskClick}/>
         </div>
       )
     }, this);
 
     return (
-      <div id="lists" className="row">
-        {lists}
+      <div>
+        <div id="lists" className="row">
+          {lists}
+        </div>
       </div>
     )
-  }
+  },
 });
 
 module.exports = Lists;

@@ -25,6 +25,10 @@ var TasksStore = createStore({
     return _.map(_projectIndex[projectId], function(taskId) {
       return _tasks[taskId];
     });
+  },
+
+  getById: function(id) {
+    return _tasks[id];
   }
 });
 
