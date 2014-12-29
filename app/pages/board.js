@@ -36,9 +36,8 @@ var Board = React.createClass({
     return (
       <section>
         <div className="row">
-          <h1 className="col-xs-12 col-sm-8">Board</h1>
-          <div className="col-xs-12 col-sm-4">
-            <form className="form-inline" onSubmit={this.handleSubmit}>
+          <div className="col-xs-12 col-sm-4 col-sm-offset-8">
+            <form id="new-task-form" className="form-inline pull-right" onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <input className="form-control" type="text" placeholder="New task" ref="task" />
               </div>
