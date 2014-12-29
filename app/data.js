@@ -37,9 +37,9 @@ class Data {
       .child('tasks')
       .push({
         task: title,
-        state:
-        'ideas',
-        type: 'task'
+        state: 'ideas',
+        type: 'task',
+        created_at: Date.now()
       });
   }
 
