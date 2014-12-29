@@ -7,7 +7,7 @@ var Layout = React.createClass({
     return (
       <div>
         <Navbar />
-        <div className="container">
+        <div className="container" id="main">
           <this.props.activeRouteHandler />
         </div>
       </div>
