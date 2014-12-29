@@ -1,3 +1,13 @@
+body {
+    background: url(https://unsplash.imgix.net/photo-1416339158484-9637228cc908?q=75&fm=jpg&s=60d0db124f5db769af5b6852435272b7);
+    background-size: cover;
+}
+
+#main {
+    background: rgba(255, 255, 255, 0.88);
+    border-radius: 5px;
+    padding-top: 10px;
+}
 .navbar-header .navbar-brand {
     color: #9b59b6;
     font-size: 1.5em;
