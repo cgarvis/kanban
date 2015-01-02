@@ -1,14 +1,15 @@
 var React = require('react');
+var RouteHandler = require('react-router').RouteHandler;
 
-var Navbar = require('./navbar')
+var Navbar = require('./navbar');
 
 var Layout = React.createClass({
-  render: function() {
+  render() {
     return (
       <div>
         <Navbar />
         <div className="container" id="main">
-          <this.props.activeRouteHandler />
+          <RouteHandler />
         </div>
       </div>
     )
