@@ -18,11 +18,12 @@
     "http-server": "^0.7.2"
   },
   "scripts": {
-    "build": "webpack --progress --colors --watch",
+    "build": "webpack --progress",
     "prestart": "npm install",
     "start": "http-server app -a 0.0.0.0 -p 7070",
     "pretest": "npm install",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --progress --colors --watch"
   },
   "author": "",
   "license": "ISC"
