@@ -33,7 +33,10 @@ var Projects = React.createClass({
 
     return (
       <div className="row">
-        <h1 className="col-xs-12">Projects</h1>
+        <h1 className="col-xs-12 col-sm-10">Projects</h1>
+        <div className="col-sm-2">
+          <Link to="new-project" className="btn btn-link pull-right">Add project</Link>
+        </div>
 
         <div className="col-xs-12">
           <ul id="project-list" className="list-unstyled">
