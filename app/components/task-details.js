@@ -30,19 +30,30 @@ var TaskDetails = React.createClass({
       onChange: this.onSaveEditable.bind(this, "task")
     }
 
+    var description = task.description || '';
+
     return (
       <div className="task-details">
-        <header className="col-xs-12 col-sm-10">
-          <SimpleEditable
-            displayComponentClass={React.DOM.h1}
-            edit={editTitle}
-            value={task.task}>
-            {task.task}
-          </SimpleEditable>
-        </header>
+        <div className="row">
+          <header className="col-xs-12 col-sm-10">
+            <SimpleEditable
+              displayComponentClass={React.DOM.h1}
+              edit={editTitle}
+              value={task.task}>
+              {task.task}
+            </SimpleEditable>
+          </header>
 
-        <div className="actions col-sm-2">
-          <Dropdown title="..." items={items} />
+          <div className="actions col-sm-2">
+            <Dropdown title="..." items={items} />
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12">
+          <header>
+            <h2>Description</h2>
+          </header>
+          {description.split("\n").map(p => <p>{p}</p>)}
         </div>
       </div>
     )

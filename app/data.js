@@ -17,17 +17,13 @@ class Data {
 
   update(task) {
     console.log('Updating task', task);
+
     this.ref
         .child('projects')
         .child(task.projectId)
         .child('tasks')
         .child(task.id)
-        .set({
-          task: task.task,
-          state: task.state,
-          type: task.type,
-          description: task.description
-        });
+        .set(task);
   }
 
   createTask(projectId, title) {
