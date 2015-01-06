@@ -6,11 +6,38 @@ class Data {
   init() {
     this.ref = new Firebase("https://kanban-tasks.firebaseio.com/");
     this.ref.on('value', this.onChange, this);
+    this.ref.onAuth(this.onAuthChange);
     this.data = {}
   }
 
+  authWithOAuth(provider) {
+    // You can use authWithOAuthPopup as well
+    this.ref.authWithOAuthRedirect(provider, function(err) {
+      if(err) {
+        console.log(err);
+      }
+    });
+  }
+
+  unauth() {
+    this.ref.unauth();
+  }
+
+  onAuthChange(authData) {
+    if (authData) {
+      var authenticatedUser = {
+        avatar: authData.github.cachedUserProfile.avatar_url,
+        displayName: authData.github.displayName,
+        token: authData.token
+      }
+
+      ServerActionCreators.loggedIn(authenticatedUser)
+    } else {
+      ServerActionCreators.loggedOut();
+    }
+  }
+
   onChange(snapshot) {
-    console.log('Firebase data has changed');
     this.data = snapshot.val();
     ServerActionCreators.receiveData(this.data);
   }
@@ -24,8 +51,6 @@ class Data {
   }
 
   update(task) {
-    console.log('Updating task', task);
-
     this.ref
         .child('projects')
         .child(task.projectId)

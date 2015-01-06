@@ -1,8 +1,28 @@
 var Dispatcher = require('../dispatcher/dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
+
 module.exports = {
-  receiveData: function(data) {
+  loggedIn(authenticatedUser) {
+    Dispatcher.handleServerAction({
+      type: ActionTypes.LOGGED_IN,
+      user: authenticatedUser
+    });
+
+    var router = require('../router');
+    router.transitionTo('projects');
+  },
+
+  loggedOut() {
+    Dispatcher.handleServerAction({
+      type: ActionTypes.LOGGED_OUT
+    });
+
+    var router = require('../router');
+    router.transitionTo('login');
+  },
+
+  receiveData(data) {
     Dispatcher.handleServerAction({
       type: ActionTypes.RECEIVE_RAW_DATA,
       rawData: data

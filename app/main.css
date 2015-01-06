@@ -1,6 +1,13 @@
-body {
-    background: url(https://unsplash.imgix.net/photo-1416339158484-9637228cc908?q=75&fm=jpg&s=60d0db124f5db769af5b6852435272b7);
-    background-size: cover;
+#authentication {
+}
+
+#authentication .oauth {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }
 
 #main {
@@ -8,9 +15,30 @@ body {
     border-radius: 5px;
     padding: 10px;
 }
+
 .navbar-header .navbar-brand {
     color: #9b59b6;
     font-size: 1.5em;
+}
+
+.navbar-top-links > li > a{
+    display: table-cell;
+    padding: 0 12px;
+    vertical-align: middle;
+}
+
+.navbar-top-links .username {
+    float: right;
+    white-space: nowrap;
+    height: 100%;
+    line-height: 47px;
+    margin: 0 10px;
+}
+
+.img-user {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
 }
 
 .navbar-brand .fa {
@@ -83,4 +111,8 @@ ul.list li {
 
 .task-details header h1 {
     margin-top: 0;
+}
+
+.fa-github {
+    font-size: 5em;
 }

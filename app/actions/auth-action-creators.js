@@ -4,10 +4,11 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var data = require('../data');
 
 module.exports = {
-  save: function(task) {
-    data.update(task);
+  loginWithGithub() {
+    data.authWithOAuth('github');
   },
-  remove: function(task) {
-    data.removeTask(task.projectId, task);
-  },
+
+  logout() {
+    data.unauth();
+  }
 };

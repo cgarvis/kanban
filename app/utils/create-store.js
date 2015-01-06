@@ -1,10 +1,10 @@
 var EventEmitter = require('events').EventEmitter;
-var merge = require('react/lib/merge');
+var assign = require('object-assign');
 
 var CHANGE_EVENT = 'change';
 
 function createStore(spec) {
-  var store = merge(EventEmitter.prototype, merge(spec, {
+  var store = assign(EventEmitter.prototype, assign(spec, {
     emitChange: function() {
       this.emit(CHANGE_EVENT);
     },
