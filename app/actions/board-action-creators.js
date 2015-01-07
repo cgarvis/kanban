@@ -4,8 +4,12 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var data = require('../data');
 
 module.exports = {
-  createTask: function(projectId, task) {
-    data.createTask(projectId, task);
+  createBoard: function(name) {
+    data.createBoard(name);
+  },
+
+  createTask: function(boardId, task) {
+    data.createTask(boardId, task);
   },
 
   move: function(task, toList) {
@@ -15,10 +19,10 @@ module.exports = {
     }
   },
 
-  selectProject: function(projectId) {
+  selectBoard: function(boardId) {
     Dispatcher.handleViewAction({
-      type: ActionTypes.SELECT_PROJECT,
-      projectId: projectId
+      type: ActionTypes.SELECT_BOARD,
+      boardId: boardId
     });
   },
 

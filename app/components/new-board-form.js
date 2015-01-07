@@ -1,10 +1,10 @@
 var React = require('react/addons');
 
-var ProjectActionCreators = require('../actions/project-action-creators');
+var BoardActionCreators = require('../actions/board-action-creators');
 
 var FormField = require('./form-field');
 
-var NewProjectForm = React.createClass({
+var NewBoardForm = React.createClass({
   propTypes: {
     onSubmit: React.PropTypes.func
   },
@@ -20,7 +20,7 @@ var NewProjectForm = React.createClass({
   _submit(e) {
     e.preventDefault();
 
-    ProjectActionCreators.createProject(this.state.name);
+    BoardActionCreators.createBoard(this.state.name);
     if(this.props.onSubmit) {
       this.props.onSubmit.call();
     }
@@ -29,7 +29,7 @@ var NewProjectForm = React.createClass({
   render() {
     return (
       <form onSubmit={this._submit}>
-        <FormField label="Project Name" valueLink={this.linkState('name')} />
+        <FormField label="Board Name" valueLink={this.linkState('name')} />
 
         <button className="btn btn-default" type="submit">Create</button>
       </form>
@@ -37,4 +37,4 @@ var NewProjectForm = React.createClass({
   }
 });
 
-module.exports = NewProjectForm;
+module.exports = NewBoardForm;

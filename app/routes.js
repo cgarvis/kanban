@@ -12,8 +12,8 @@ var Layout = require('./components/layout');
 var App = require('./pages/app');
 var Board = require('./pages/board');
 var Login = require('./pages/login');
-var NewProject = require('./pages/new-project');
-var Projects = require('./pages/projects');
+var NewBoard = require('./pages/new-board');
+var Boards = require('./pages/boards');
 var TaskDetails = require('./pages/task-details');
 
 var NotFound = require('./pages/not-found');
@@ -22,11 +22,11 @@ var NotFound = require('./pages/not-found');
 var routes = (
   <Route handler={App}>
     <Route handler={Layout}>
-      <Route name="board" path="projects/:projectId/board" handler={Board} />
-      <Route name="new-project" path="projects/new" handler={NewProject} />
-      <Route name="projects" handler={Projects} />
-      <Route name="task-details" path="projects/:projectId/task/:taskId" handler={TaskDetails} />
-      <DefaultRoute handler={Projects}/>
+      <Route name="new-board" path="boards/new" handler={NewBoard} />
+      <Route name="board" path="boards/:boardId" handler={Board} />
+      <Route name="boards" handler={Boards} />
+      <Route name="task-details" path="boards/:boardId/task/:taskId" handler={TaskDetails} />
+      <DefaultRoute handler={Boards}/>
     </Route>
 
     <Route name="login" path="/login" handler={Login} />

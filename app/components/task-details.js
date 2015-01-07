@@ -61,7 +61,7 @@ var TaskDetails = React.createClass({
 
   _remove: function() {
     TaskActionCreators.remove(this.props.task);
-    this.transitionTo('board', {projectId: this.props.task.projectId});
+    this.transitionTo('board', {boardId: this.props.task.boardId});
   }
 });
 

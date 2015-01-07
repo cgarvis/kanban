@@ -23,13 +23,13 @@ var Board = React.createClass({
   getStateFromStore: function() {
     this.setState({
       lists: BoardStore.getAllLists(),
-      tasks: BoardStore.getAllForCurrentProject(),
+      tasks: BoardStore.getAllForCurrentBoard(),
       selectedTask: BoardStore.getSelectedTask()
     });
   },
 
   componentWillMount: function() {
-    BoardActionCreators.selectProject(this.props.params.projectId);
+    BoardActionCreators.selectBoard(this.props.params.boardId);
   },
 
   render: function() {
@@ -58,13 +58,12 @@ var Board = React.createClass({
     var task = this.refs.task.getDOMNode().value.trim();
     this.refs.task.getDOMNode().value = '';
 
-    BoardActionCreators.createTask(this.props.params.projectId, task);
+    BoardActionCreators.createTask(this.props.params.boardId, task);
   },
 
   _selectTask: function(task) {
-    this.transitionTo('task-details', {projectId: this.props.params.projectId, taskId: task.id});
+    this.transitionTo('task-details', {boardId: this.props.params.boardId, taskId: task.id});
   },
 });
 
 module.exports = Board;
-

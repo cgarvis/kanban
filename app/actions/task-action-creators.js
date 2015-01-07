@@ -8,6 +8,6 @@ module.exports = {
     data.update(task);
   },
   remove: function(task) {
-    data.removeTask(task.projectId, task);
+    data.removeTask(task.boardId, task);
   },
 };

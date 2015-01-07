@@ -6,23 +6,23 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var createStore = require('../utils/create-store');
 
 var _tasks = [];
-var _projectIndex = [];
+var _boardIndex = [];
 
 function loadRawData(rawData) {
-  _.each(rawData.projects, function(project, projectId) {
-    _projectIndex[projectId] = [];
-    _.each(project.tasks, function(task, taskId) {
+  _.each(rawData.boards, function(board, boardId) {
+    _boardIndex[boardId] = [];
+    _.each(board.tasks, function(task, taskId) {
       _tasks[taskId] = task;
       _tasks[taskId].id = taskId;
-      _tasks[taskId].projectId = projectId;
-      _projectIndex[projectId].push(taskId);
+      _tasks[taskId].boardId = boardId;
+      _boardIndex[boardId].push(taskId);
     });
   });
 }
 
 var TasksStore = createStore({
-  getAllByProjectId: function(projectId) {
-    return _.map(_projectIndex[projectId], function(taskId) {
+  getAllByBoardId: function(boardId) {
+    return _.map(_boardIndex[boardId], function(taskId) {
       return _tasks[taskId];
     });
   },

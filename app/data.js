@@ -42,9 +42,9 @@ class Data {
     ServerActionCreators.receiveData(this.data);
   }
 
-  createProject(name) {
+  createBoard(name) {
     this.ref
-      .child('projects')
+      .child('boards')
       .push({
         name: name
       });
@@ -52,17 +52,17 @@ class Data {
 
   update(task) {
     this.ref
-        .child('projects')
-        .child(task.projectId)
+        .child('boards')
+        .child(task.boardId)
         .child('tasks')
         .child(task.id)
         .set(task);
   }
 
-  createTask(projectId, title) {
+  createTask(boardId, title) {
     this.ref
-      .child('projects')
-      .child(projectId)
+      .child('boards')
+      .child(boardId)
       .child('tasks')
       .push({
         task: title,
@@ -72,10 +72,10 @@ class Data {
       });
   }
 
-  removeTask(projectId, task) {
+  removeTask(boardId, task) {
     this.ref
-      .child('projects')
-      .child(projectId)
+      .child('boards')
+      .child(boardId)
       .child('tasks')
       .child(task.id)
       .remove();

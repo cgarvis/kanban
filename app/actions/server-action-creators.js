@@ -10,7 +10,7 @@ module.exports = {
     });
 
     var router = require('../router');
-    router.transitionTo('projects');
+    router.transitionTo('boards');
   },
 
   loggedOut() {
