@@ -14,7 +14,7 @@ var Task = React.createClass({
     var className = "card " + type;
 
     return (
-      <div className={className} onClick={this._handleClick}>
+      <div className={className} onClick={this._handleClick} onTouchEnd={this._handleClick} >
         {this.props.task.task}
       </div>
     )
