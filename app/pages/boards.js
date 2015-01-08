@@ -27,21 +27,25 @@ var Boards = React.createClass({
   },
 
   render: function() {
-    var boardList = this.state.boards.map(function(board) {
-      return (<li className="well"><Link to="board" params={{boardId: board.id}}>{board.name}</Link></li>)
-    });
-
     return (
       <div className="row">
-        <h1 className="col-xs-12 col-sm-10">Boards</h1>
-        <div className="col-sm-2">
-          <Link to="new-board" className="btn btn-link pull-right">Add board</Link>
+        <h1 className="col-xs-10">Boards</h1>
+        <div className="col-xs-2">
+          <Link to="new-board" className="btn btn-link pull-right"> Add board</Link>
         </div>
 
         <div className="col-xs-12">
-          <ul id="board-list" className="list-unstyled">
-            { boardList }
-          </ul>
+          <div id="board-list" className="row">
+            { this.state.boards.map(board => {
+              return (
+                <div className="col-xs-12 col-sm-4 col-md-3">
+                  <div className="well">
+                    <Link to="board" params={{boardId: board.id}}>{board.name}</Link>
+                  </div>
+                </div>
+              )
+            }) }
+          </div>
         </div>
       </div>
     )
