@@ -36,15 +36,19 @@ var Board = React.createClass({
     return (
       <section>
         <div className="row">
-          <div className="col-xs-12 col-sm-4 col-sm-offset-8">
-            <form id="new-task-form" className="form-inline pull-right" onSubmit={this.handleSubmit}>
-              <div className="form-group">
+          <form id="new-task-form" onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <div className="col-sm-12 col-md-10">
                 <input className="form-control" type="text" placeholder="New task" ref="task" />
               </div>
+            </div>
 
-              <button type="submit" className="btn btn-default">Create</button>
-            </form>
-          </div>
+            <div className="form-group">
+              <div className="col-sm-12 col-md-2">
+                <button type="submit" className="btn btn-default btn-block">Create</button>
+              </div>
+            </div>
+          </form>
         </div>
 
         <Lists lists={this.state.lists} tasks={this.state.tasks} onTaskClick={this._selectTask}/>
