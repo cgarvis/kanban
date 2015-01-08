@@ -19,7 +19,7 @@
     "http-server": "^0.7.2"
   },
   "scripts": {
-    "build": "webpack --progress",
+    "build": "webpack --config webpack-production.config.js --progress --profile --colors",
     "prestart": "npm install",
     "start": "http-server app -a 0.0.0.0 -p 7070",
     "pretest": "npm install",
