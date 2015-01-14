@@ -14,6 +14,9 @@ var Board = require('./pages/board');
 var Login = require('./pages/login');
 var NewBoard = require('./pages/new-board');
 var Boards = require('./pages/boards');
+var Organizations = require('./pages/organizations');
+var Organization = require('./pages/organization');
+var NewOrganization = require('./pages/new-organization');
 var TaskDetails = require('./pages/task-details');
 
 var NotFound = require('./pages/not-found');
@@ -26,6 +29,10 @@ var routes = (
       <Route name="board" path="boards/:boardId" handler={Board} />
       <Route name="boards" handler={Boards} />
       <Route name="task-details" path="boards/:boardId/task/:taskId" handler={TaskDetails} />
+
+      <Route name="organization" path="organizations/:organizationId" handler={Organization} />
+      <Route name="organizations" handler={Organizations} />
+      <Route name="new-organization" handler={NewOrganization} />
       <DefaultRoute handler={Boards}/>
     </Route>
 

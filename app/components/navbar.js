@@ -37,6 +37,7 @@ var Navbar = React.createClass({
           </div>
 
           <ul className="nav navbar-nav">
+            <li><Link to="organizations">Organizations</Link></li>
             <li><Link to="boards">Boards</Link></li>
           </ul>
 

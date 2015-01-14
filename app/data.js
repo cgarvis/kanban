@@ -6,7 +6,7 @@ class Data {
   init() {
     this.ref = new Firebase("https://kanban-tasks.firebaseio.com/");
     this.ref.on('value', this.onChange, this);
-    this.ref.onAuth(this.onAuthChange);
+    this.ref.onAuth(this.onAuthChange.bind(this));
     this.data = {}
   }
 
@@ -24,6 +24,8 @@ class Data {
   }
 
   onAuthChange(authData) {
+    this.auth = authData;
+
     if (authData) {
       var authenticatedUser = {
         avatar: authData.github.cachedUserProfile.avatar_url,
@@ -45,6 +47,14 @@ class Data {
   createBoard(name) {
     this.ref
       .child('boards')
+      .push({
+        name: name
+      });
+  }
+
+  createOrganization(name) {
+    this.ref
+      .child('organizations')
       .push({
         name: name
       });

@@ -1,5 +1,10 @@
 var ListenToStore = {
   componentDidMount: function() {
+    if(!this.stores) {
+      console.warn('Stores is not set');
+      return;
+    }
+
     this.stores.forEach(function(store) {
       store.addChangeListener(this._onChange);
     }, this);

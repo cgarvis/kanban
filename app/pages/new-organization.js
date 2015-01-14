@@ -1,13 +1,13 @@
 var React = require('react');
-var Navigation = require('react-router').Navigation;
+var {Navigation} = require('react-router');
 
-var NewBoardForm = require('../components/new-board-form');
+var NewOrganizationForm = require('../components/new-organization-form');
 
-var NewBoard = React.createClass({
+var NewOrganization = React.createClass({
   mixins: [Navigation],
 
   _routeToBoardPage() {
-    this.transitionTo('boards');
+    this.transitionTo('organizations');
   },
 
   render() {
@@ -20,7 +20,7 @@ var NewBoard = React.createClass({
         </div>
         <div className="row">
           <div className="col-xs-12">
-            <NewBoardForm onSubmit={this._routeToBoardPage} />
+            <NewOrganizationForm onSubmit={this._routeToBoardPage}/>
           </div>
         </div>
       </section>
@@ -28,4 +28,4 @@ var NewBoard = React.createClass({
   }
 });
 
-module.exports =  NewBoard;
+module.exports =  NewOrganization;

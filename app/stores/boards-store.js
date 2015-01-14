@@ -16,6 +16,7 @@ function loadRawData(rawData) {
       _boards.push(rawBoard);
     }
   }
+
 }
 
 var BoardsStore = createStore({
