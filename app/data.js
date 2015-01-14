@@ -15,10 +15,18 @@ class Data {
   }
 
   authWithOAuth(provider) {
-    // You can use authWithOAuthPopup as well
-    this.ref.authWithOAuthRedirect(provider, function(err) {
+    // prefer pop-ups, so we don't navigate away from the page
+    this.ref.authWithOAuthPopup(provider, function(err) {
       if(err) {
-        console.log(err);
+        if (error.code === "TRANSPORT_UNAVAILABLE") {
+          // fall-back to browser redirects, and pick up the session
+          // automatically when we come back to the origin page
+          ref.authWithOAuthRedirect(provider, function(error) {
+            console.error(err);
+          });
+        } else {
+          console.error(err);
+        }
       }
     });
   }
