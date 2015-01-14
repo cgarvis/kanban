@@ -6,7 +6,11 @@ class Data {
   init() {
     this.ref = new Firebase("https://kanban-tasks.firebaseio.com/");
     this.ref.on('value', this.onChange, this);
-    this.ref.onAuth(this.onAuthChange);
+
+    this.ref.onAuth((authData) => {
+      this.onAuthChange(authData);
+    });
+
     this.data = {}
   }
 
@@ -24,7 +28,11 @@ class Data {
   }
 
   onAuthChange(authData) {
+    this.auth = authData;
+
     if (authData) {
+      this.ref.child('users').child(authData.uid).set(authData);
+
       var authenticatedUser = {
         avatar: authData.github.cachedUserProfile.avatar_url,
         displayName: authData.github.displayName,
