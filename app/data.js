@@ -2,12 +2,15 @@ var Firebase = require("firebase");
 
 var ServerActionCreators = require('./actions/server-action-creators');
 
+var FIREBASE_URL = "https://kanban-tasks.firebaseio.com/";
+
 class Data {
   init() {
-    this.ref = new Firebase("https://kanban-tasks.firebaseio.com/");
+    this.ref = new Firebase(FIREBASE_URL);
+
     this.ref.on('value', this.onChange, this);
     this.ref.onAuth(this.onAuthChange.bind(this));
-    this.data = {}
+    this.data = {};
   }
 
   authWithOAuth(provider) {
