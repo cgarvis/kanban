@@ -1,12 +1,10 @@
 var Dispatcher = require('../dispatcher/dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
-module.exports = {
-  loginWithGithub() {
-    require('../auth').authWithOAuth('github');
-  },
+var data = require('../data');
 
-  logout() {
-    require('../auth').unauth();
-  }
+module.exports = {
+  createOrganization: function(name) {
+    data.createOrganization(name);
+  },
 };

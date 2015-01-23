@@ -7,7 +7,6 @@ var List = require('./list');
 
 var Lists = React.createClass({
   propTypes: {
-    lists: React.PropTypes.array.isRequired,
     tasks: React.PropTypes.array.isRequired,
     onTaskClick: React.PropTypes.func
   },
@@ -39,7 +38,7 @@ var Lists = React.createClass({
   },
 
   render: function() {
-    var lists = this.props.lists.map(function(list) {
+    var lists = [ 'ideas', 'backlog', 'doing', 'done' ].map(function(list) {
       var tasks = this.props.tasks.filter(function(task) {
         return task.state === list;
       }, this);

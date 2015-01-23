@@ -1,68 +1,91 @@
-var Firebase = require("firebase");
-
 var ServerActionCreators = require('./actions/server-action-creators');
 
 class Data {
-  init() {
-    this.ref = new Firebase("https://kanban-tasks.firebaseio.com/");
-    this.ref.on('value', this.onChange, this);
+  constructor() {
+    this.ref = require('./firebase');
+    this.user = {};
+    this.refs = {};
 
-    this.ref.onAuth((authData) => {
-      this.onAuthChange(authData);
-    });
-
-    this.data = {}
+    this.ref.onAuth(this.authChange.bind(this));
   }
 
-  authWithOAuth(provider) {
-    // prefer pop-ups, so we don't navigate away from the page
-    this.ref.authWithOAuthPopup(provider, function(err) {
-      if(err) {
-        if (error.code === "TRANSPORT_UNAVAILABLE") {
-          // fall-back to browser redirects, and pick up the session
-          // automatically when we come back to the origin page
-          ref.authWithOAuthRedirect(provider, function(error) {
-            console.error(err);
-          });
-        } else {
-          console.error(err);
-        }
-      }
-    });
-  }
+  authChange(authData) {
+    this.authData = authData;
 
-  unauth() {
-    this.ref.unauth();
-  }
-
-  onAuthChange(authData) {
-    this.auth = authData;
-
-    if (authData) {
-      this.ref.child('users').child(authData.uid).set(authData);
-
-      var authenticatedUser = {
-        avatar: authData.github.cachedUserProfile.avatar_url,
-        displayName: authData.github.displayName,
-        token: authData.token
-      }
-
-      ServerActionCreators.loggedIn(authenticatedUser)
+    if(authData) {
+      this.bindToUser(authData);
     } else {
-      ServerActionCreators.loggedOut();
+      this.unbindToUser();
     }
   }
 
-  onChange(snapshot) {
-    this.data = snapshot.val();
-    ServerActionCreators.receiveData(this.data);
+  bindToUser(user) {
+    this.userRef = this.ref.child('users/' + user.uid);
+    this.userRef.on('value', (dataSnapshot) => {
+      var bindToBoards = (boards) => {
+        boards.every(board => {
+          this.refs[board] = this.ref.child('boards/' + board);
+          this.refs[board].on('value', watchBoards);
+          return true;
+        });
+      }
+
+      var watchBoards = (snapshot) => {
+        var boardData = snapshot.val();
+        boardData.id = snapshot.key();
+        ServerActionCreators.receiveBoard(boardData);
+      }
+
+      var watchOrg = (snapshot) => {
+          var orgData = snapshot.val();
+          orgData.id = snapshot.key();
+
+          if(orgData.boards) {
+            var boards = Object.keys(orgData.boards);
+            bindToBoards(boards);
+          }
+
+          ServerActionCreators.receiveOrganization(orgData);
+      }
+
+      var data = dataSnapshot.val();
+      if(data.organizations) {
+        var orgs = Object.keys(data.organizations);
+        orgs.every(org => {
+          this.refs[org] = this.ref.child('organizations/' + org);
+          this.refs[org].on('value', watchOrg);
+          return true;
+        });
+      }
+    });
   }
 
-  createBoard(name) {
-    this.ref
+  unbindToUser() {
+    this.userRef = {};
+    this.refs = {};
+  }
+
+  createBoard(organizationId, name) {
+    var boardRef = this.ref
       .child('boards')
       .push({
-        name: name
+        name: name,
+        organization_id: organizationId
+      }, (err) => {
+        if(err) throw err;
+        this.ref.child('organizations/' + organizationId + '/boards/' + boardRef.key()).set(true);
+      });
+  }
+
+  createOrganization(name) {
+    var members = {};
+    members[this.authData.uid] = true;
+
+    var orgRef = this.ref
+      .child('organizations')
+      .push({ name: name, members: members }, (err) => {
+        if(err) throw err;
+        this.userRef.child('organizations/' + orgRef.key()).set(true);
       });
   }
 
@@ -84,7 +107,7 @@ class Data {
         task: title,
         state: 'ideas',
         type: 'task',
-        created_at: Date.now()
+        created_at: Firebase.ServerValue.TIMESTAMP
       });
   }
 
@@ -98,4 +121,4 @@ class Data {
   }
 }
 
-module.exports = new Data;
+module.exports = new Data();

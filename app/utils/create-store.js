@@ -4,7 +4,7 @@ var assign = require('object-assign');
 var CHANGE_EVENT = 'change';
 
 function createStore(spec) {
-  var store = assign(EventEmitter.prototype, assign(spec, {
+  var store = assign({
     emitChange: function() {
       this.emit(CHANGE_EVENT);
     },
@@ -16,7 +16,7 @@ function createStore(spec) {
     removeChangeListener: function(callback) {
       this.removeListener(CHANGE_EVENT, callback);
     }
-  }));
+  }, spec, EventEmitter.prototype);
 
   Object.keys(store).forEach(function(key) {
     var val = store[key];

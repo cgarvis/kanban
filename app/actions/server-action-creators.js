@@ -1,7 +1,6 @@
 var Dispatcher = require('../dispatcher/dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 
-
 module.exports = {
   loggedIn(authenticatedUser) {
     Dispatcher.handleServerAction({
@@ -22,9 +21,16 @@ module.exports = {
     router.transitionTo('login');
   },
 
-  receiveData(data) {
+  receiveBoard(data) {
     Dispatcher.handleServerAction({
-      type: ActionTypes.RECEIVE_RAW_DATA,
+      type: ActionTypes.RECEIVE_BOARD,
+      rawData: data
+    });
+  },
+
+  receiveOrganization(data) {
+    Dispatcher.handleServerAction({
+      type: ActionTypes.RECEIVE_ORGANIZATION,
       rawData: data
     });
   }

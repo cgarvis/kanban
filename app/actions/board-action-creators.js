@@ -4,8 +4,8 @@ var ActionTypes = require('../constants/constants').ActionTypes;
 var data = require('../data');
 
 module.exports = {
-  createBoard: function(name) {
-    data.createBoard(name);
+  createBoard: function(organizationId, name) {
+    data.createBoard(organizationId, name);
   },
 
   createTask: function(boardId, task) {
