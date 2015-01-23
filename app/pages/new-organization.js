@@ -15,7 +15,7 @@ var NewOrganization = React.createClass({
       <section>
         <div className="row">
           <div className="col-xs-12">
-            <h1>New Board</h1>
+            <h1>New Organization</h1>
           </div>
         </div>
         <div className="row">

@@ -7,7 +7,10 @@ var ListenToStore = require('../utils/listen-to-store');
 
 var OrganizationDropDown = React.createClass({
   propTypes: {
-    valueLink: React.PropTypes.object.isRequired,
+    valueLink: React.PropTypes.shape({
+      value: React.PropTypes.string.isRequired,
+      requestChange: React.PropTypes.func.isRequired
+    })
   },
 
   mixins: [ListenToStore],

@@ -26,6 +26,8 @@ var SelectField = React.createClass({
     }
   },
 
+  mixins: [React.addons.LinkedStateMixin],
+
   getValueLink: function(props) {
     return props.valueLink || {
       value: props.value,
@@ -33,7 +35,14 @@ var SelectField = React.createClass({
     };
   },
 
-  mixins: [React.addons.LinkedStateMixin],
+  componentWillReceiveProps(nextProps) {
+    var valueLink = this.getValueLink(this.props);
+    var options = nextProps.options;
+
+    if(!valueLink.value && options.length) {
+      valueLink.requestChange(options[0].value);
+    }
+  },
 
   _onChange(evt) {
     this.getValueLink(this.props).requestChange(evt.target.value);
@@ -49,7 +58,7 @@ var SelectField = React.createClass({
           onChange={this._onChange}
         >
         {this.props.options.map(option => {
-          return <option value={option.value}>{option.label}</option>
+          return <option key={option.value} value={option.value}>{option.label}</option>
         })}
         </select>
       </div>

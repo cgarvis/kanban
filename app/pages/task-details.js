@@ -1,6 +1,6 @@
 var React = require('react');
 
-var TasksStore = require('../stores/tasks-store');
+var BoardsStore = require('../stores/boards-store');
 
 var TaskDetails = require('../components/task-details');
 var ListenToStore = require('../utils/listen-to-store');
@@ -14,11 +14,11 @@ var TaskDetailsPage = React.createClass({
     };
   },
 
-  stores: [TasksStore],
+  stores: [BoardsStore],
 
   getStateFromStore: function() {
     this.setState({
-      task: TasksStore.getById(this.props.params.taskId),
+      task: BoardsStore.getTask(this.props.params.boardId, this.props.params.taskId),
     });
   },
 

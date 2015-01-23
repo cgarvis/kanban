@@ -14,14 +14,15 @@ var NewBoardForm = React.createClass({
 
   getInitialState() {
     return {
-      name: ''
+      name: '',
+      organizationId: '',
     };
   },
 
   _submit(e) {
     e.preventDefault();
 
-    BoardActionCreators.createBoard(this.state.name);
+    BoardActionCreators.createBoard(this.state.organizationId, this.state.name);
 
     if(this.props.onSubmit) {
       this.props.onSubmit.call();
@@ -31,7 +32,7 @@ var NewBoardForm = React.createClass({
   render() {
     return (
       <form onSubmit={this._submit}>
-        <OrganizationDropDown valueLink={this.linkState('organization') } />
+        <OrganizationDropDown valueLink={this.linkState('organizationId')} />
 
         <InputField
           type="text"

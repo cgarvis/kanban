@@ -21,7 +21,6 @@ var TaskDetails = require('./pages/task-details');
 
 var NotFound = require('./pages/not-found');
 
-
 var routes = (
   <Route handler={App}>
     <Route handler={Layout}>

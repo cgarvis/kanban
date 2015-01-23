@@ -5,7 +5,8 @@ module.exports = {
     LOGGED_IN: null,
     LOGGED_OUT: null,
     RECEIVE_AUTH: null,
-    RECEIVE_RAW_DATA: null,
+    RECEIVE_BOARD: null,
+    RECEIVE_ORGANIZATION: null,
     SELECT_BOARD: null,
     SELECT_TASK: null
   }),

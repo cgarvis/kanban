@@ -2,7 +2,7 @@ var React = require('react');
 var Navigation = require('react-router').Navigation;
 
 var BoardActionCreators = require('../actions/board-action-creators');
-var BoardStore = require('../stores/board-store');
+var BoardsStore = require('../stores/boards-store');
 
 var Lists = require('../components/lists');
 var ListenToStore = require('../utils/listen-to-store');
@@ -12,19 +12,15 @@ var Board = React.createClass({
 
   getInitialState: function() {
     return {
-      lists: [],
       tasks: [],
-      selectedTask: null,
     };
   },
 
-  stores: [BoardStore],
+  stores: [BoardsStore],
 
   getStateFromStore: function() {
     this.setState({
-      lists: BoardStore.getAllLists(),
-      tasks: BoardStore.getAllForCurrentBoard(),
-      selectedTask: BoardStore.getSelectedTask()
+      tasks: BoardsStore.getTasks(this.props.params.boardId),
     });
   },
 
@@ -51,7 +47,7 @@ var Board = React.createClass({
           </form>
         </div>
 
-        <Lists lists={this.state.lists} tasks={this.state.tasks} onTaskClick={this._selectTask}/>
+        <Lists tasks={this.state.tasks} onTaskClick={this._selectTask}/>
       </section>
     )
   },

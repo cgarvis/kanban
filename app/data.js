@@ -1,65 +1,91 @@
-var Firebase = require("firebase");
-
 var ServerActionCreators = require('./actions/server-action-creators');
 
-var FIREBASE_URL = "https://kanban-tasks.firebaseio.com/";
-
 class Data {
-  init() {
-    this.ref = new Firebase(FIREBASE_URL);
+  constructor() {
+    this.ref = require('./firebase');
+    this.user = {};
+    this.refs = {};
 
-    this.ref.on('value', this.onChange, this);
-    this.ref.onAuth(this.onAuthChange.bind(this));
-    this.data = {};
+    this.ref.onAuth(this.authChange.bind(this));
   }
 
-  authWithOAuth(provider) {
-    // You can use authWithOAuthPopup as well
-    this.ref.authWithOAuthRedirect(provider, function(err) {
-      if(err) {
-        console.log(err);
+  authChange(authData) {
+    this.authData = authData;
+
+    if(authData) {
+      this.bindToUser(authData);
+    } else {
+      this.unbindToUser();
+    }
+  }
+
+  bindToUser(user) {
+    this.userRef = this.ref.child('users/' + user.uid);
+    this.userRef.on('value', (dataSnapshot) => {
+      var bindToBoards = (boards) => {
+        boards.every(board => {
+          this.refs[board] = this.ref.child('boards/' + board);
+          this.refs[board].on('value', watchBoards);
+          return true;
+        });
+      }
+
+      var watchBoards = (snapshot) => {
+        var boardData = snapshot.val();
+        boardData.id = snapshot.key();
+        ServerActionCreators.receiveBoard(boardData);
+      }
+
+      var watchOrg = (snapshot) => {
+          var orgData = snapshot.val();
+          orgData.id = snapshot.key();
+
+          if(orgData.boards) {
+            var boards = Object.keys(orgData.boards);
+            bindToBoards(boards);
+          }
+
+          ServerActionCreators.receiveOrganization(orgData);
+      }
+
+      var data = dataSnapshot.val();
+      if(data.organizations) {
+        var orgs = Object.keys(data.organizations);
+        orgs.every(org => {
+          this.refs[org] = this.ref.child('organizations/' + org);
+          this.refs[org].on('value', watchOrg);
+          return true;
+        });
       }
     });
   }
 
-  unauth() {
-    this.ref.unauth();
+  unbindToUser() {
+    this.userRef = {};
+    this.refs = {};
   }
 
-  onAuthChange(authData) {
-    this.auth = authData;
-
-    if (authData) {
-      var authenticatedUser = {
-        avatar: authData.github.cachedUserProfile.avatar_url,
-        displayName: authData.github.displayName,
-        token: authData.token
-      }
-
-      ServerActionCreators.loggedIn(authenticatedUser)
-    } else {
-      ServerActionCreators.loggedOut();
-    }
-  }
-
-  onChange(snapshot) {
-    this.data = snapshot.val();
-    ServerActionCreators.receiveData(this.data);
-  }
-
-  createBoard(name) {
-    this.ref
+  createBoard(organizationId, name) {
+    var boardRef = this.ref
       .child('boards')
       .push({
-        name: name
+        name: name,
+        organization_id: organizationId
+      }, (err) => {
+        if(err) throw err;
+        this.ref.child('organizations/' + organizationId + '/boards/' + boardRef.key()).set(true);
       });
   }
 
   createOrganization(name) {
-    this.ref
+    var members = {};
+    members[this.authData.uid] = true;
+
+    var orgRef = this.ref
       .child('organizations')
-      .push({
-        name: name
+      .push({ name: name, members: members }, (err) => {
+        if(err) throw err;
+        this.userRef.child('organizations/' + orgRef.key()).set(true);
       });
   }
 
@@ -81,7 +107,7 @@ class Data {
         task: title,
         state: 'ideas',
         type: 'task',
-        created_at: Date.now()
+        created_at: Firebase.ServerValue.TIMESTAMP
       });
   }
 
@@ -95,4 +121,4 @@ class Data {
   }
 }
 
-module.exports = new Data;
+module.exports = new Data();
