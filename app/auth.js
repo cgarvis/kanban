@@ -8,7 +8,7 @@ class Auth {
 
   authWithOAuth(provider) {
     // prefer pop-ups, so we don't navigate away from the page
-    this.ref.authWithOAuthPopup(provider, function(err) {
+    ref.authWithOAuthPopup(provider, function(err) {
       if(err) {
         if (error.code === "TRANSPORT_UNAVAILABLE") {
           // fall-back to browser redirects, and pick up the session
